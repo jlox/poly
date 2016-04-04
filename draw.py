@@ -2,7 +2,7 @@ from display import *
 from matrix import *
 import math
 
-MAX_STEPS = 100
+MAX_STEPS = 10
 
 def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(points, x0, y0, z0)
@@ -49,7 +49,7 @@ def add_sphere( points, cx, cy, cz, r, step ):
     generate_sphere( temp, cx, cy, cz, r, step )
 
     lat = 0
-    lat_stop = num_steps/2
+    lat_stop = 3
     longt = 0
     longt_stop = num_steps
     
@@ -58,8 +58,12 @@ def add_sphere( points, cx, cy, cz, r, step ):
         while longt < longt_stop:
 
             index = lat * num_steps + longt
-            add_polygon(points, temp[index][0], temp[index][1], temp[index][2], temp[index+1][0], temp[index+1][1], temp[index+1][2], temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
-            add_polygon(points, temp[index][0], temp[index][1], temp[index][2], temp[index+num_steps+1][0], temp[index+num_steps+1][1], temp[index+num_steps+1][2], temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
+            add_polygon(points, temp[index][0], temp[index][1], temp[index][2],
+                        temp[index+1][0], temp[index+1][1], temp[index+1][2],
+                        temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
+            add_polygon(points, temp[index][0], temp[index][1], temp[index][2],
+                        temp[index+num_steps+1][0], temp[index+num_steps+1][1], temp[index+num_steps+1][2],
+                        temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
             """           
             add_edge( points, temp[index][0], temp[index][1], temp[index][2], temp[index][0], temp[index][1], temp[index][2] )
             """
@@ -104,10 +108,13 @@ def add_torus( points, cx, cy, cz, r0, r1, step ):
     while lat < lat_stop:
         longt = 0
         while longt < longt_stop:
-            
+            index = lat * num_steps + longt
+            add_polygon(points, temp[index][0], temp[index][1], temp[index][2], temp[index+1][0], temp[index+1][1], temp[index+1][2], temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
+            add_polygon(points, temp[index][0], temp[index][1], temp[index][2], temp[index+num_steps+1][0], temp[index+num_steps+1][1], temp[index+num_steps+1][2], temp[index+num_steps][0], temp[index+num_steps][1], temp[index+num_steps][2])
+            """
             index = lat * num_steps + longt
             add_edge( points, temp[index][0], temp[index][1], temp[index][2], temp[index][0], temp[index][1], temp[index][2] )
-            
+            """
             longt+= 1
         lat+= 1
 
