@@ -49,7 +49,7 @@ def add_sphere( points, cx, cy, cz, r, step ):
     generate_sphere( temp, cx, cy, cz, r, step )
 
     lat = 0
-    lat_stop = num_steps
+    lat_stop = num_steps/2
     longt = 0
     longt_stop = num_steps
     
